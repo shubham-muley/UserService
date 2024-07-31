@@ -1,5 +1,6 @@
 package dev.ecommerce.userservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,5 +23,6 @@ public abstract class BaseModel {
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
+    @JsonIgnore
     private boolean deleted;
 }
