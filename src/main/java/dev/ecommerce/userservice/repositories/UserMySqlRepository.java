@@ -2,9 +2,10 @@ package dev.ecommerce.userservice.repositories;
 
 import dev.ecommerce.userservice.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.lang.NonNullApi;
+
+import java.util.Optional;
 
 public interface UserMySqlRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     User save(User user);
 }
