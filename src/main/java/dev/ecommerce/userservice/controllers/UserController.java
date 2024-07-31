@@ -21,7 +21,7 @@ public class UserController {
      }
 
      @PostMapping("")
-     public ResponseEntity<UserSignUpResponseDto> UserSignUp(@RequestBody UserSignUpRequestDto userSignUpRequestDto){
+     public ResponseEntity<UserSignUpResponseDto> UserSignUp(@RequestBody UserSignUpRequestDto userSignUpRequestDto) throws Exception {
           User user = basicUserService.createUser(
                   userSignUpRequestDto.getEmail(),
                   userSignUpRequestDto.getPassword(),

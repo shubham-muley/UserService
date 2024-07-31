@@ -1,8 +1,5 @@
 package dev.ecommerce.userservice.dtos;
 
-import dev.ecommerce.userservice.models.BaseModel;
-import dev.ecommerce.userservice.models.Role;
-import dev.ecommerce.userservice.models.User;
 import lombok.Getter;
 import lombok.Setter;
 

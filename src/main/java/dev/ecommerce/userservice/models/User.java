@@ -3,7 +3,6 @@ package dev.ecommerce.userservice.models;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.List;
