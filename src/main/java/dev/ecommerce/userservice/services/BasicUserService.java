@@ -6,6 +6,7 @@ import dev.ecommerce.userservice.exceptions.UserNotFoundException;
 import dev.ecommerce.userservice.models.Role;
 import dev.ecommerce.userservice.models.Token;
 import dev.ecommerce.userservice.models.User;
+import dev.ecommerce.userservice.repositories.RoleRepository;
 import dev.ecommerce.userservice.repositories.TokenRepository;
 import dev.ecommerce.userservice.repositories.UserMySqlRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,17 +26,17 @@ public class BasicUserService implements UserService {
 
     public UserMySqlRepository userMySqlRepository;
     public BCryptPasswordEncoder bCryptPasswordEncoder;
-    public TokenRepository tokenRepository;
     public TokenService tokenService;
+    public RoleService roleService;
 
     public BasicUserService(UserMySqlRepository userMySqlRepository,
                             BCryptPasswordEncoder bCryptPasswordEncoder,
-                            TokenRepository tokenRepository,
-                            TokenService tokenService) {
+                            TokenService tokenService,
+                            RoleService roleService) {
         this.userMySqlRepository = userMySqlRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.tokenRepository = tokenRepository;
         this.tokenService = tokenService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -46,7 +47,12 @@ public class BasicUserService implements UserService {
         }
         List<Role> roles = new ArrayList<>();
         for(String roleName: roleNames) {
-            roles.add(new Role(roleName));
+            Role role = roleService.getRoleByName(roleName);
+            if (role != null) {
+                roles.add(role);
+            }else {
+                roles.add(new Role(roleName));
+            }
         }
         User newUser = new User(email, bCryptPasswordEncoder.encode(hashedPassword), roles);
         return userMySqlRepository.save(newUser);
@@ -58,7 +64,6 @@ public class BasicUserService implements UserService {
         if (user.isEmpty()) {
             throw new UserNotFoundException();
         }
-        Token token = tokenService.createToken(user.get());
-        return token;
+        return tokenService.createToken(user.get());
     }
 }
